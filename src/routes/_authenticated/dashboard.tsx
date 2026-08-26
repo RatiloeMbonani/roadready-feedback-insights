@@ -39,7 +39,7 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
       },
     ],
   }),
-  component: DashboardPage;
+  component: DashboardPage,
 });
 
 const SENTIMENT_COLORS: Record<string, string> = {
