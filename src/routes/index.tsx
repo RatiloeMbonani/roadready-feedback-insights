@@ -76,15 +76,8 @@ function FeedbackPage() {
 
   return (
     <main>
-      <section className="relative overflow-hidden border-b border-border/70">
-        <img
-          src={heroImage}
-          alt="Empty highway at dusk with glowing lane markings"
-          width={1600}
-          height={900}
-          className="absolute inset-0 h-full w-full object-cover opacity-25"
-        />
-        <div className="relative mx-auto max-w-6xl px-5 py-16">
+      <section className="grid border-b border-border lg:grid-cols-2">
+        <div className="mx-auto w-full max-w-3xl px-5 py-16 lg:pl-[max(1.25rem,calc((100vw-72rem)/2))]">
           <p className="eyebrow">Phase 2 · Citizen Voice</p>
           <h1 className="mt-3 max-w-2xl text-4xl font-bold uppercase leading-[1.05] sm:text-6xl">
             Tell us how your traffic service visit really went
@@ -95,17 +88,24 @@ function FeedbackPage() {
             RoadReady can fix what matters.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 text-sm">
-            <span className="flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2">
+            <span className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2">
               <Gauge className="h-4 w-4 text-primary" /> Instant sentiment scoring
             </span>
-            <span className="flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2">
+            <span className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2">
               <ShieldCheck className="h-4 w-4 text-primary" /> Anonymous by default
             </span>
-            <span className="flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2">
+            <span className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2">
               <BarChart3 className="h-4 w-4 text-primary" /> Feeds the admin dashboard
             </span>
           </div>
         </div>
+        <img
+          src={heroImage}
+          alt="Empty highway at dusk with glowing lane markings"
+          width={1600}
+          height={900}
+          className="h-64 w-full object-cover lg:h-full"
+        />
       </section>
 
       <section className="mx-auto grid max-w-6xl gap-6 px-5 py-12 lg:grid-cols-[1.4fr_1fr]">

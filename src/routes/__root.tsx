@@ -123,7 +123,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen">
-        <header className="border-b border-border/70 backdrop-blur">
+        <header className="border-b border-border bg-background">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
             <Link to="/" className="flex items-center gap-3">
               <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary font-display text-lg font-bold text-primary-foreground">
