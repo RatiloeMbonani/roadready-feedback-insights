@@ -82,7 +82,7 @@ function FeedbackPage() {
           alt="Empty highway at dusk with glowing lane markings"
           width={1600}
           height={900}
-          className="absolute inset-0 h-full w-full object-cover opacity-25"
+          className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="relative mx-auto max-w-6xl px-5 py-16">
           <p className="eyebrow">Phase 2 · Citizen Voice</p>
