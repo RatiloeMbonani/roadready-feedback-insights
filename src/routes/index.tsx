@@ -88,17 +88,24 @@ function FeedbackPage() {
             RoadReady can fix what matters.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 text-sm">
-            <span className="flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2">
+            <span className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2">
               <Gauge className="h-4 w-4 text-primary" /> Instant sentiment scoring
             </span>
-            <span className="flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2">
+            <span className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2">
               <ShieldCheck className="h-4 w-4 text-primary" /> Anonymous by default
             </span>
-            <span className="flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2">
+            <span className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2">
               <BarChart3 className="h-4 w-4 text-primary" /> Feeds the admin dashboard
             </span>
           </div>
         </div>
+        <img
+          src={heroImage}
+          alt="Empty highway at dusk with glowing lane markings"
+          width={1600}
+          height={900}
+          className="h-64 w-full object-cover lg:h-full"
+        />
       </section>
 
       <section className="mx-auto grid max-w-6xl gap-6 px-5 py-12 lg:grid-cols-[1.4fr_1fr]">
