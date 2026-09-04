@@ -50,9 +50,15 @@ const SENTIMENT_COLORS: Record<string, string> = {
 
 function DashboardPage() {
   const fetchDashboard = useServerFn(getDashboard);
+  const runInsights = useServerFn(generateInsights);
   const claim = useServerFn(claimAdmin);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  const insightsMutation = useMutation({
+    mutationFn: () => runInsights(),
+    onError: (err: Error) => toast.error(err.message),
+  });
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["dashboard"],
