@@ -107,3 +107,34 @@ export const getDashboard = createServerFn({ method: "GET" })
     const { buildDashboard } = await import("./dashboard-stats");
     return buildDashboard(rows ?? [], services ?? []);
   });
+
+export const generateInsights = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data: isAdmin } = await context.supabase.rpc("has_role", {
+      _user_id: context.userId,
+      _role: "admin",
+    });
+    if (!isAdmin) throw new Error("Forbidden: administrator access required.");
+
+    const [{ data: rows, error }, { data: services, error: servicesError }] = await Promise.all([
+      context.supabase
+        .from("feedback")
+        .select("id, service_id, rating, comment, sentiment, vader_compound, created_at")
+        .order("created_at", { ascending: false })
+        .limit(2000),
+      context.supabase.from("service_types").select("id, name"),
+    ]);
+    if (error) throw new Error(error.message);
+    if (servicesError) throw new Error(servicesError.message);
+
+    const { buildDashboard } = await import("./dashboard-stats");
+    const dashboard = buildDashboard(rows ?? [], services ?? []);
+    if (dashboard.total === 0) {
+      return { insights: "No feedback has been submitted yet, so there is nothing to analyse." };
+    }
+
+    const { generateInsightsText } = await import("./insights.server");
+    return { insights: await generateInsightsText(dashboard) };
+  });
+
