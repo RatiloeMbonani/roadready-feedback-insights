@@ -18,7 +18,7 @@ import {
 } from "recharts";
 import { toast } from "sonner";
 
-import { claimAdmin, getDashboard } from "@/lib/feedback.functions";
+import { claimAdmin, generateInsights, getDashboard } from "@/lib/feedback.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
