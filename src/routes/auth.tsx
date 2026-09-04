@@ -29,7 +29,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -39,7 +39,13 @@ function AuthPage() {
     event.preventDefault();
     setBusy(true);
     try {
-      if (mode === "signup") {
+      if (mode === "reset") {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+        if (error) throw error;
+        toast.success("Reset link sent. Check your email inbox (and spam folder).");
+      } else if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -111,6 +117,7 @@ function AuthPage() {
             required
           />
         </div>
+        {mode !== "reset" && (
         <div className="space-y-2">
           <Label htmlFor="password">Password</Label>
           <Input
@@ -124,8 +131,9 @@ function AuthPage() {
             required
           />
         </div>
+        )}
         <Button type="submit" disabled={busy} className="w-full font-display uppercase tracking-wide">
-          {mode === "signup" ? "Create account" : "Sign in"}
+          {mode === "signup" ? "Create account" : mode === "reset" ? "Send reset link" : "Sign in"}
         </Button>
         <Button
           type="button"
@@ -142,6 +150,13 @@ function AuthPage() {
           onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
         >
           {mode === "signin" ? "Need an account? Register" : "Already registered? Sign in"}
+        </button>
+        <button
+          type="button"
+          className="w-full text-center text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+          onClick={() => setMode(mode === "reset" ? "signin" : "reset")}
+        >
+          {mode === "reset" ? "Back to sign in" : "Forgot your password?"}
         </button>
       </form>
     </main>
