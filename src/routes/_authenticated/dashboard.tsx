@@ -148,6 +148,59 @@ function DashboardPage() {
         <StatCard label="Negative" value={`${data.percentages.Negative}%`} tone="Negative" />
       </section>
 
+      <section className="panel mt-6 p-6">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="eyebrow">AI-assisted</p>
+            <h2 className="mt-1 text-xl font-bold uppercase">Insights &amp; recommendations</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Let AI read the current feedback data and summarise what matters, what is going wrong
+              and what to do next.
+            </p>
+          </div>
+          <Button
+            className="font-display uppercase"
+            disabled={insightsMutation.isPending}
+            onClick={() => insightsMutation.mutate()}
+          >
+            {insightsMutation.isPending ? "Analysing…" : "Generate insights"}
+          </Button>
+        </div>
+
+        {insightsMutation.data ? (
+          <div className="mt-5 space-y-2 text-sm leading-relaxed">
+            {insightsMutation.data.insights.split("\n").map((line, index) => {
+              const text = line.trim();
+              if (!text) return null;
+              if (text.startsWith("#")) {
+                return (
+                  <h3 key={index} className="pt-3 font-display text-base font-bold uppercase">
+                    {text.replace(/^#+\s*/, "")}
+                  </h3>
+                );
+              }
+              const bullet = text.startsWith("-") || text.startsWith("*");
+              return (
+                <p
+                  key={index}
+                  className={bullet ? "pl-4 text-muted-foreground" : "text-muted-foreground"}
+                >
+                  {bullet ? `• ${text.replace(/^[-*]\s*/, "")}` : text}
+                </p>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="mt-5 text-sm text-muted-foreground">
+            {insightsMutation.isPending
+              ? "Reading the latest citizen feedback…"
+              : "No analysis generated yet."}
+          </p>
+        )}
+      </section>
+
+
+
       <section className="mt-6 grid gap-6 lg:grid-cols-2">
         <div className="panel p-6">
           <h2 className="text-xl font-bold uppercase">Overall sentiment split</h2>
