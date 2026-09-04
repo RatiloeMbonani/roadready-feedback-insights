@@ -170,7 +170,7 @@ function DashboardPage() {
         {insightsMutation.data ? (
           <div className="mt-5 space-y-2 text-sm leading-relaxed">
             {insightsMutation.data.insights.split("\n").map((line, index) => {
-              const text = line.trim();
+              const text = line.trim().replace(/\*\*/g, "");
               if (!text) return null;
               if (text.startsWith("#")) {
                 return (
